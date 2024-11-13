@@ -5,7 +5,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -201,4 +201,10 @@ return (
   );
 };
 
-export default SearchResult;
+export default function SearchPage() {
+  return (
+    <Suspense>
+      <SearchResult />
+    </Suspense>
+  );
+}
