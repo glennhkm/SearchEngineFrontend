@@ -26,7 +26,7 @@ export const NewsModal = (props: NewsModalProps) => {
             <p className="text-sm text-neutral-500"><b>Date :</b> {props.newsData.Tanggal}</p>
         </div>
         <p className="text-justify">{props.newsData['Isi Berita']}</p>
-        <Link className="w-full" href={props.newsData.Url}>
+        <Link target="_blank" className="w-full" href={props.newsData.Url}>
             <p className="text-sm truncate">Original news : <span className="text-blue-300 hover:underline">{props.newsData.Url}</span></p>
         </Link>
       </div>

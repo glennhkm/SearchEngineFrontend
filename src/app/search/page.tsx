@@ -180,7 +180,7 @@ return (
                 <p className="font-bold text-2xl">{result.title}</p>
                 <p className="text-neutral-200">{result.summary}</p>
                 <p><b>Score : </b>{result.score}</p>
-                <Link href={result.url} className="text-xs truncate -mb-3 mt-4 hover:underline">Original News: {result.url}</Link>
+                <Link target="_blank" href={result.url} className="text-xs truncate -mb-3 mt-4 hover:underline">Original News: {result.url}</Link>
                 <div className="w-full h-[1px] bg-white/20 my-6"></div>
               </div>
             ))
