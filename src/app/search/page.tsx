@@ -22,7 +22,7 @@ const SearchResult = () => {
   const [searchValue, setSearchValue] = useState<string>(searchParams.get("q") || "");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [searchResultsPage, setSearchResultsPage] = useState<any[]>([]);
-  const [arrayPagination, setArrayPagination] = useState(Array)
+  const [arrayPagination, setArrayPagination] = useState(Array(0).fill(0))
   const [isLoading, setIsLoading] = useState(true)
   const [isShowNews, setIsShowNews] = useState(false)
   const [resultShow, setResultShow] = useState({})
@@ -67,8 +67,8 @@ const SearchResult = () => {
       const result = await axios.post("http://localhost:5000/search", { query: searchValue, category: category.option });    
       const lengthPagination = Math.ceil(result.data.length / 10)      
       setArrayPagination(new Array(lengthPagination).fill(0));
-      setCurrentPage(1)
       setIsLoading(false)
+      setCurrentPage(1)
       setSearchResults(result.data);
       setSearchResultsPage(result.data.slice(0, 10))
     } catch (error) {
@@ -89,8 +89,8 @@ const SearchResult = () => {
       const result = await axios.post("http://localhost:5000/search", { query: searchValue, category: option.option });       
       const lengthPagination = Math.ceil(result.data.length / 10)      
       setArrayPagination(new Array(lengthPagination).fill(0));
-      setCurrentPage(1)
       setIsLoading(false)
+      setCurrentPage(1)
       setSearchResults(result.data);
       setSearchResultsPage(result.data.slice(0, 10))
     } catch (error) {
@@ -122,6 +122,7 @@ const SearchResult = () => {
     }
   }
 
+  console.log(currentPage)
 return (
   <div className="flex w-full">
     {isShowNews && (
@@ -187,7 +188,7 @@ return (
           {(searchResultsPage.length > 0 && !isLoading) && (
             <div className="flex gap-2 absolute bottom-6">
               {arrayPagination.map((_, index) => (            
-                <button key={index} onClick={() => setPagination(index + 1)} className={`bg-white/10 flex w-8 h-8 justify-center items-center text-sm font-semibold rounded-full ${currentPage === index + 1 ? 'bg-blue-400 hover:bg-blue-400' : 'hover:bg-white/20'}`}>{index + 1}</button>
+                <button key={index} onClick={() => setPagination(index + 1)} className={`flex w-8 h-8 justify-center items-center text-sm font-semibold rounded-full ${index + 1 === currentPage ? 'bg-blue-400' : 'bg-white/10 hover:bg-white/20'}`}>{index + 1}</button>
               ))}
             </div>
           )}
@@ -201,10 +202,12 @@ return (
   );
 };
 
-export default function SearchPage() {
+const ResultPage = () => {
   return (
     <Suspense>
       <SearchResult />
     </Suspense>
-  );
+  );  
 }
+
+export default ResultPage;
