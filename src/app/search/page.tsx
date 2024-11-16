@@ -19,6 +19,7 @@ import { NewsModal } from "@/components/newsModal/newsModal";
 
 const SearchResult = () => {
   const searchParams = useSearchParams();
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";  
   const [searchValue, setSearchValue] = useState<string>(searchParams.get("q") || "");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [searchResultsPage, setSearchResultsPage] = useState<any[]>([]);
@@ -64,7 +65,7 @@ const SearchResult = () => {
         return;          
       }
       router.replace(`/search?category=${initialCategory.option.toLowerCase()}&q=${searchValue}`);
-      const result = await axios.post("http://localhost:5000/search", { query: searchValue, category: category.option });    
+      const result = await axios.post(`${apiBaseUrl}/search`, { query: searchValue, category: category.option });    
       const lengthPagination = Math.ceil(result.data.length / 10)      
       setArrayPagination(new Array(lengthPagination).fill(0));
       setIsLoading(false)
@@ -86,7 +87,7 @@ const SearchResult = () => {
         return;
       }
       router.replace(`/search?category=${option.option.toLowerCase()}&q=${searchValue}`);
-      const result = await axios.post("http://localhost:5000/search", { query: searchValue, category: option.option });       
+      const result = await axios.post(`${apiBaseUrl}/search`, { query: searchValue, category: option.option });       
       const lengthPagination = Math.ceil(result.data.length / 10)      
       setArrayPagination(new Array(lengthPagination).fill(0));
       setIsLoading(false)
@@ -113,7 +114,7 @@ const SearchResult = () => {
       console.log(result)
       const category = result.category.toLowerCase()
       const slug = result.slug
-      const resultData = await axios.get(`http://localhost:5000/news/${category}/${slug}`)      
+      const resultData = await axios.get(`${apiBaseUrl}/news/${category}/${slug}`)      
       setResultShow(resultData.data)
       setIsShowNews(true)
       console.log(resultData)
@@ -122,7 +123,6 @@ const SearchResult = () => {
     }
   }
 
-  console.log(currentPage)
 return (
   <div className="flex w-full">
     {isShowNews && (
