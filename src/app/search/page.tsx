@@ -16,6 +16,7 @@ import { GalleryVerticalEnd, HandCoins, LoaderCircleIcon, Medal, Search } from "
 import search from "@/lottieJson/search.json";
 import Lottie from "lottie-react";
 import { NewsModal } from "@/components/newsModal/newsModal";
+import https from "https";
 
 const SearchResult = () => {
   const searchParams = useSearchParams();
@@ -65,7 +66,18 @@ const SearchResult = () => {
         return;          
       }
       router.replace(`/search?category=${initialCategory.option.toLowerCase()}&q=${searchValue}`);
-      const result = await axios.post(`${apiBaseUrl}/search`, { query: searchValue, category: category.option });    
+      const result = await axios.post(
+        `${apiBaseUrl}/search`,
+        {
+          query: searchValue,
+          category: category.option,
+        },
+        {
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false,
+          }),
+        }
+      );         
       const lengthPagination = Math.ceil(result.data.length / 10)      
       setArrayPagination(new Array(lengthPagination).fill(0));
       setIsLoading(false)
@@ -87,7 +99,18 @@ const SearchResult = () => {
         return;
       }
       router.replace(`/search?category=${option.option.toLowerCase()}&q=${searchValue}`);
-      const result = await axios.post(`${apiBaseUrl}/search`, { query: searchValue, category: option.option });       
+      const result = await axios.post(
+        `${apiBaseUrl}/search`,
+        {
+          query: searchValue,
+          category: category.option,
+        },
+        {
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false,
+          }),
+        }
+      );      
       const lengthPagination = Math.ceil(result.data.length / 10)      
       setArrayPagination(new Array(lengthPagination).fill(0));
       setIsLoading(false)
@@ -111,10 +134,16 @@ const SearchResult = () => {
 
   const getNewsBySlugAndCategory = async (result: any) => {
     try {
-      console.log(result)
       const category = result.category.toLowerCase()
       const slug = result.slug
-      const resultData = await axios.get(`${apiBaseUrl}/news/${category}/${slug}`)      
+      const resultData = await axios.get(
+        `${apiBaseUrl}/news/${category}/${slug}`,
+        {
+          httpAgent: new https.Agent({
+            rejectUnauthorized: false,
+          }),
+        }
+      );      
       setResultShow(resultData.data)
       setIsShowNews(true)
       console.log(resultData)
