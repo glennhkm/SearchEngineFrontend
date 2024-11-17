@@ -71,11 +71,6 @@ const SearchResult = () => {
         {
           query: searchValue,
           category: category.option,
-        },
-        {
-          httpsAgent: new https.Agent({
-            rejectUnauthorized: false,
-          }),
         }
       );         
       const lengthPagination = Math.ceil(result.data.length / 10)      
@@ -104,11 +99,6 @@ const SearchResult = () => {
         {
           query: searchValue,
           category: option.option,
-        },
-        {
-          httpsAgent: new https.Agent({
-            rejectUnauthorized: false,
-          }),
         }
       );      
       const lengthPagination = Math.ceil(result.data.length / 10)      
@@ -137,12 +127,7 @@ const SearchResult = () => {
       const category = result.category.toLowerCase()
       const slug = result.slug
       const resultData = await axios.get(
-        `${apiBaseUrl}/news/${category}/${slug}`,
-        {
-          httpAgent: new https.Agent({
-            rejectUnauthorized: false,
-          }),
-        }
+        `${apiBaseUrl}/news/${category}/${slug}`
       );      
       setResultShow(resultData.data)
       setIsShowNews(true)
