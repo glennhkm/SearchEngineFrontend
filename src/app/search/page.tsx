@@ -103,7 +103,7 @@ const SearchResult = () => {
         `${apiBaseUrl}/search`,
         {
           query: searchValue,
-          category: category.option,
+          category: option.option,
         },
         {
           httpsAgent: new https.Agent({
